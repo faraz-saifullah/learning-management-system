@@ -1,0 +1,13 @@
+{
+    "PostgresDatabase": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "lms",
+        "password": "Pass@123",
+        "port": 5432
+    },
+    "Session": {
+        "name": "lms-user-session",
+        "secret": "This is a random session secret"
+    }
+}
