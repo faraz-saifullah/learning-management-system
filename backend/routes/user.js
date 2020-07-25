@@ -11,6 +11,11 @@ router.get("/:userId", new Auth().isAuthorized, async function (req, res) {
   return new APIResponseHandler().handle(res, result);
 });
 
+router.get("/:userId/classrooms", new Auth().isAuthorized, async function (req, res) {
+  let result = await new User().getAllClassrooms(req);
+  return new APIResponseHandler().handle(res, result);
+});
+
 //All routes related to login signup and logout
 router.post("/signup", async function (req, res) {
   let result = await new User().createUser(req);

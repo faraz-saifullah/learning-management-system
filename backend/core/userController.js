@@ -1,10 +1,12 @@
 const UsersDbConnector = require("../dbConnector/users");
+const UserClassroomMapDbConnector = require("../dbConnector/userClassroomMap");
 const bcrypt = require("bcrypt");
 
 class User {
   //creating new paysafe user
   constructor() {
     this.usersDbConnector = new UsersDbConnector();
+    this.userClassroomMapDbConnector = new UserClassroomMapDbConnector();
   }
 
   async createUser(req) {
@@ -48,6 +50,14 @@ class User {
           message: "User does not exist",
         };
       }
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async getAllClassrooms(req) {
+    try {
+      return await this.userClassroomMapDbConnector.getAllClassroomsOfUser(req.params.userId);
     } catch (err) {
       return err;
     }
