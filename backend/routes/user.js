@@ -11,7 +11,10 @@ router.get("/:userId", new Auth().isAuthorized, async function (req, res) {
   return new APIResponseHandler().handle(res, result);
 });
 
-router.get("/:userId/classrooms", new Auth().isAuthorized, async function (req, res) {
+router.get("/:userId/classrooms", new Auth().isAuthorized, async function (
+  req,
+  res
+) {
   let result = await new User().getAllClassrooms(req);
   return new APIResponseHandler().handle(res, result);
 });

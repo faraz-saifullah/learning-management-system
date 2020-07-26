@@ -15,6 +15,12 @@ const userRouter = require("./routes/user");
 
 const app = express();
 
+var corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 const pgPool = new Pg.Pool({
   user: config.PostgresDatabase.user,
   host: config.PostgresDatabase.host,
@@ -33,10 +39,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 15 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      maxAge: 24 * 60 * 60 * 1000,
       sameSite: true,
-    }, // 15 days
-    proxy: true,
+    }, // 1 day
   })
 );
 
@@ -47,7 +53,7 @@ app.set("view engine", "jade");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));

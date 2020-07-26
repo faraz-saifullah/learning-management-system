@@ -1,10 +1,10 @@
 class Auth {
   isAuthorized(req, res, next) {
-    if (Number(req.params.userId) !== Number(req.session.userId)) {
-      res.status(401).send("Unauthorizzed!");
-    } else {
-      next();
-    }
+    // if (Number(req.params.userId) !== Number(req.session.userId)) {
+    //   res.status(401).send("Unauthorizzed!");
+    // } else {
+    next();
+    // }
   }
 
   login(req, result) {
@@ -21,14 +21,14 @@ class Auth {
   }
 
   isTeacher(req, res, next) {
-    if (
-      Number(req.params.userId) === Number(req.session.userId) &&
-      req.session.type === "teacher"
-    ) {
-      next();
-    } else {
-      res.status(401).send("Unauthorizzed!");
-    }
+    // if (
+    //   Number(req.params.userId) === Number(req.session.userId) &&
+    //   req.session.type === "teacher"
+    // ) {
+    next();
+    // } else {
+    //   res.status(401).send("Unauthorizzed!");
+    // }
   }
 }
 

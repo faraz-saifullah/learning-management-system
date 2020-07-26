@@ -57,7 +57,9 @@ class User {
 
   async getAllClassrooms(req) {
     try {
-      return await this.userClassroomMapDbConnector.getAllClassroomsOfUser(req.params.userId);
+      return await this.userClassroomMapDbConnector.getAllClassroomsOfUser(
+        req.params.userId
+      );
     } catch (err) {
       return err;
     }
