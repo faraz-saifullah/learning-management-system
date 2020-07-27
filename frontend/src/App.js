@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./components/auth/Login";
 import ClassroomList from "./components/classrooms/ClassroomList";
+import ClassroomOverview from "./components/classroomOverview/ClassroomOverview";
 import Context from "./Context";
 import Navbar from "./components/navbar/Navbar";
 import axios from "axios";
@@ -14,6 +15,7 @@ export default class App extends Component {
     this.state = {
       user: null,
       classrooms: [],
+      isLoadingClassrooms: false,
     };
     this.routerRef = React.createRef();
   }
@@ -40,23 +42,28 @@ export default class App extends Component {
   //Load classrooms fromm database on Component Mount
   //Also if any user was authenticated get his details
   //Update user and classroom details after finishing the async call
-  componentDidMount() {
+  componentWillMount() {
     const user = this.state.user || JSON.parse(localStorage.getItem("user"));
+    this.setState({
+      user,
+    });
     if (user) {
+      this.setState({
+        isLoadingClassrooms: true,
+      });
       axios
         .get(`${BASE_URL}/users/${user.user_id}/classrooms`)
         .then((response) => {
           let classrooms = response.data.data;
-          console.log(classrooms);
           this.setState({
             classrooms,
-            user,
+            isLoadingClassrooms: false,
           });
         })
         .catch((err) => {
           this.setState({
-            user,
             classrooms: [],
+            isLoadingClassrooms: false,
           });
         });
     }
@@ -64,23 +71,30 @@ export default class App extends Component {
 
   render() {
     return (
-      <Context.Provider
-        value={{
-          ...this.state,
-          login: this.login,
-          logout: this.logout,
-        }}
-      >
-        <Router ref={this.routerRef}>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={ClassroomList} />
-              <Route exact path="/login" component={Login} />
-            </Switch>
-          </div>
-        </Router>
-      </Context.Provider>
+      !this.state.isLoadingClassrooms && (
+        <Context.Provider
+          value={{
+            ...this.state,
+            login: this.login,
+            logout: this.logout,
+          }}
+        >
+          <Router ref={this.routerRef}>
+            <div className="App">
+              <Navbar />
+              <Switch>
+                <Route exact path="/" component={ClassroomList} />
+                <Route
+                  exact
+                  path="/classroom/:classroomId"
+                  component={ClassroomOverview}
+                />
+                <Route exact path="/login" component={Login} />
+              </Switch>
+            </div>
+          </Router>
+        </Context.Provider>
+      )
     );
   }
 }

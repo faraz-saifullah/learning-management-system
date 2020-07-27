@@ -6,6 +6,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 class ClassroomItem extends Component {
+  goToClassroomOverview = (event) => {
+    event.preventDefault();
+    const { classroom } = this.props;
+    this.props.history.push(`/classroom/${classroom.classroom_id}`);
+  };
   render() {
     const { classroom } = this.props;
     return (
@@ -24,7 +29,9 @@ class ClassroomItem extends Component {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button color="primary">Class Details</Button>
+              <Button color="primary" onClick={this.goToClassroomOverview}>
+                Class Details
+              </Button>
             </CardActions>
           </Card>
         </div>

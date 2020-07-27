@@ -18,7 +18,11 @@ class ClassroomList extends Component {
             {classrooms && classrooms.length ? (
               // Diplay each classroom
               classrooms.map((classroom, index) => (
-                <ClassroomItem classroom={classroom} key={index} />
+                <ClassroomItem
+                  history={this.props.history}
+                  classroom={classroom}
+                  key={index}
+                />
               ))
             ) : (
               <div className="column">

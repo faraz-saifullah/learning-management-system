@@ -34,8 +34,8 @@ class Login extends Component {
       if (!validationError) {
         this.setState({ isLoggingIn: true });
         const user = await Axios.post(`${BASE_URL}/users/login`, {
-          phone: this.state.phoneNumber,
-          password: this.state.password,
+          phone: phoneNumber,
+          password: password,
         });
         this.props.context.login(user.data.data[0]);
       }
@@ -93,8 +93,8 @@ class Login extends Component {
         </div>
       </Fragment>
     ) : (
-        <Redirect to="/" />
-      );
+      <Redirect to="/" />
+    );
   }
 }
 
