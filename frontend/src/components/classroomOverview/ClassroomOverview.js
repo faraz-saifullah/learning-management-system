@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Axios from "axios";
 
-const BASE_URL = "http://localhost:3001"
+const BASE_URL = "http://localhost:3001";
 
 class ClassroomOverview extends Component {
   constructor(props) {
@@ -47,11 +47,15 @@ class ClassroomOverview extends Component {
       timings: this.state.timings,
       days: this.state.days,
       usefulResources: this.state.useful_resources,
-    }).then((response) => {
-      alert(`Update Successful for classroom Id: ${response.data.data[0].classroom_id}`);
-    }).catch((err) => {
-      alert(`Update Unsuccessful!\nError: ${err.message}`)
     })
+      .then((response) => {
+        alert(
+          `Update Successful for classroom Id: ${response.data.data[0].classroom_id}`
+        );
+      })
+      .catch((err) => {
+        alert(`Update Unsuccessful!\nError: ${err.message}`);
+      });
     this.setState({
       editable: false,
     });
@@ -112,7 +116,9 @@ class ClassroomOverview extends Component {
                   label="Days of Class"
                   value={this.state.days}
                   variant="outlined"
-                  onChange={(e) => this.setState({ days: e.target.value.split(',') })}
+                  onChange={(e) =>
+                    this.setState({ days: e.target.value.split(",") })
+                  }
                 />
                 <br />
                 <br />
@@ -157,38 +163,38 @@ class ClassroomOverview extends Component {
                     </Button>
                   </>
                 ) : (
-                    <>
-                      <Button
-                        onClick={this.makeEditable}
-                        style={{ margin: 3 }}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                      >
-                        Edit
+                  <>
+                    <Button
+                      onClick={this.makeEditable}
+                      style={{ margin: 3 }}
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                    >
+                      Edit
                     </Button>
-                      <Button
-                        style={{ margin: 3 }}
-                        variant="contained"
-                        color="secondary"
-                        disableElevation
-                      >
-                        Delete
+                    <Button
+                      style={{ margin: 3 }}
+                      variant="contained"
+                      color="secondary"
+                      disableElevation
+                    >
+                      Delete
                     </Button>
-                    </>
-                  )}
+                  </>
+                )}
               </form>
             </center>
           </div>
         ) : (
-            <center>
-              <div className="column">
-                <span className="title has-text-grey-light">
-                  No Information To Display!
+          <center>
+            <div className="column">
+              <span className="title has-text-grey-light">
+                No Information To Display!
               </span>
-              </div>
-            </center>
-          )}
+            </div>
+          </center>
+        )}
       </Fragment>
     );
   }
