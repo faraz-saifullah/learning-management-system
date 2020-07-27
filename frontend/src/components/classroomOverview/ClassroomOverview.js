@@ -2,6 +2,9 @@ import React, { Fragment, Component } from "react";
 import withContext from "../../withContext";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Axios from "axios";
+
+const BASE_URL = "http://localhost:3001"
 
 class ClassroomOverview extends Component {
   constructor(props) {
@@ -9,10 +12,10 @@ class ClassroomOverview extends Component {
     const {
       match: { params },
     } = this.props;
-    const classroomId = params.classroomId;
+    this.classroomId = params.classroomId;
     const { classrooms } = this.props.context;
     classrooms.map((item) => {
-      if (Number(item.classroom_id) === Number(classroomId)) {
+      if (Number(item.classroom_id) === Number(this.classroomId)) {
         this.classroom = { ...item };
       }
     });
@@ -37,7 +40,18 @@ class ClassroomOverview extends Component {
 
   updateClassInfo = (event) => {
     event.preventDefault();
-    //call backend to update
+    const userId = this.props.context.user.user_id;
+    Axios.put(`${BASE_URL}/users/${userId}/classrooms/${this.classroomId}`, {
+      classroomName: this.state.classroom_name,
+      subject: this.state.subject,
+      timings: this.state.timings,
+      days: this.state.days,
+      usefulResources: this.state.useful_resources,
+    }).then((response) => {
+      alert(`Update Successful for classroom Id: ${response.data.data[0].classroom_id}`);
+    }).catch((err) => {
+      alert(`Update Unsuccessful!\nError: ${err.message}`)
+    })
     this.setState({
       editable: false,
     });
@@ -98,7 +112,7 @@ class ClassroomOverview extends Component {
                   label="Days of Class"
                   value={this.state.days}
                   variant="outlined"
-                  onChange={(e) => this.setState({ days: e.target.value })}
+                  onChange={(e) => this.setState({ days: e.target.value.split(',') })}
                 />
                 <br />
                 <br />
@@ -143,38 +157,38 @@ class ClassroomOverview extends Component {
                     </Button>
                   </>
                 ) : (
-                  <>
-                    <Button
-                      onClick={this.makeEditable}
-                      style={{ margin: 3 }}
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                    >
-                      Edit
+                    <>
+                      <Button
+                        onClick={this.makeEditable}
+                        style={{ margin: 3 }}
+                        variant="contained"
+                        color="primary"
+                        disableElevation
+                      >
+                        Edit
                     </Button>
-                    <Button
-                      style={{ margin: 3 }}
-                      variant="contained"
-                      color="secondary"
-                      disableElevation
-                    >
-                      Delete
+                      <Button
+                        style={{ margin: 3 }}
+                        variant="contained"
+                        color="secondary"
+                        disableElevation
+                      >
+                        Delete
                     </Button>
-                  </>
-                )}
+                    </>
+                  )}
               </form>
             </center>
           </div>
         ) : (
-          <center>
-            <div className="column">
-              <span className="title has-text-grey-light">
-                No Information To Display!
+            <center>
+              <div className="column">
+                <span className="title has-text-grey-light">
+                  No Information To Display!
               </span>
-            </div>
-          </center>
-        )}
+              </div>
+            </center>
+          )}
       </Fragment>
     );
   }
