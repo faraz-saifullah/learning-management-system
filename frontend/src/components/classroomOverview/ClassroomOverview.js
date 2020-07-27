@@ -41,9 +41,34 @@ class ClassroomOverview extends Component {
     this.updateClassInfo();
   };
 
-  addNewStudent = (event) => {
+  addNewStudent = async (event) => {
     event.preventDefault();
-    //add new student and update number of students in a classs
+    const { user_id } = this.props.context.user;
+    Axios.post(
+      `${BASE_URL}/users/${user_id}/classrooms/${this.state.classroom_id}/students`,
+      {
+        phone: this.state.studentPhone,
+      }
+    )
+      .then((response) => {
+        if (response.data && response.data.data && response.data.data[0]) {
+          alert(
+            `Successfully added student: ${response.data.data[0].user_id} to classroom`
+          );
+          this.setState({
+            number_of_students: this.state.number_of_students + 1,
+          });
+          this.updateClassInfo();
+        } else {
+          alert(`Student not found`);
+        }
+      })
+      .catch((err) => {
+        alert(`Student already in the classroom`);
+      });
+    this.setState({
+      studentPhone: "",
+    });
   };
 
   makeEditable = (event) => {
@@ -67,6 +92,7 @@ class ClassroomOverview extends Component {
       timings: this.state.timings,
       days: this.state.days,
       usefulResources: this.state.useful_resources,
+      numberOfStudents: this.state.number_of_students,
     })
       .then((response) => {
         alert(
@@ -202,26 +228,26 @@ class ClassroomOverview extends Component {
                         </Button>
                       </>
                     ) : (
-                        <>
-                          <Button
-                            onClick={this.makeEditable}
-                            style={{ margin: 3 }}
-                            variant="contained"
-                            color="primary"
-                            disableElevation
-                          >
-                            Edit
+                      <>
+                        <Button
+                          onClick={this.makeEditable}
+                          style={{ margin: 3 }}
+                          variant="contained"
+                          color="primary"
+                          disableElevation
+                        >
+                          Edit
                         </Button>
-                          <Button
-                            style={{ margin: 3 }}
-                            variant="contained"
-                            color="secondary"
-                            disableElevation
-                          >
-                            Delete
+                        <Button
+                          style={{ margin: 3 }}
+                          variant="contained"
+                          color="secondary"
+                          disableElevation
+                        >
+                          Delete
                         </Button>
-                        </>
-                      )}
+                      </>
+                    )}
                   </form>
                 </center>
               </Grid>
@@ -297,14 +323,14 @@ class ClassroomOverview extends Component {
             </Grid>
           </div>
         ) : (
-            <center>
-              <div className="column">
-                <span className="title has-text-grey-light">
-                  No Information To Display!
+          <center>
+            <div className="column">
+              <span className="title has-text-grey-light">
+                No Information To Display!
               </span>
-              </div>
-            </center>
-          )}
+            </div>
+          </center>
+        )}
       </Fragment>
     );
   }
