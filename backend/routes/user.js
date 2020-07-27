@@ -44,12 +44,22 @@ router.post("/:userId/classrooms", new Auth().isTeacher, async function (
   return new APIResponseHandler().handle(res, result);
 });
 
-router.put("/:userId/classrooms/:classroomId", new Auth().isTeacher, async function (
-  req,
-  res
-) {
-  let result = await new Teacher().updateClassroom(req);
-  return new APIResponseHandler().handle(res, result);
-});
+router.post(
+  "/:userId/classrooms/:classroomId/students",
+  new Auth().isTeacher,
+  async function (req, res) {
+    let result = await new Teacher().addStudentToClass(req);
+    return new APIResponseHandler().handle(res, result);
+  }
+);
+
+router.put(
+  "/:userId/classrooms/:classroomId",
+  new Auth().isTeacher,
+  async function (req, res) {
+    let result = await new Teacher().updateClassroom(req);
+    return new APIResponseHandler().handle(res, result);
+  }
+);
 
 module.exports = router;
