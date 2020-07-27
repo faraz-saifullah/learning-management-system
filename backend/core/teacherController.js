@@ -26,6 +26,14 @@ class Teacher extends User {
       return err;
     }
   }
+
+  async updateClassroom(req) {
+    try {
+      return this.classroomsDbConnector.updateClassroom(req.params.classroomId, req.body)
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = Teacher;

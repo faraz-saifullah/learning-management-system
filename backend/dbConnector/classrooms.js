@@ -28,6 +28,27 @@ class ProductsDbConnector {
       return err;
     }
   }
+
+  async updateClassroom(classroomId, reqBody) {
+    const sqlQuery = {
+      text: `UPDATE classrooms SET classroom_name = ($1), subject = ($2), 
+      timings = ($3), days = ($4), useful_resources = ($5) WHERE classroom_id = ($6) 
+      RETURNING classroom_id;`,
+      values: [
+        reqBody.classroomName,
+        reqBody.subject || "",
+        reqBody.timings || "9am to 10am",
+        reqBody.days || ["Monday"],
+        reqBody.usefulResources || [],
+        classroomId
+      ],
+    };
+    try {
+      return await this.dataService.executeQueryAsPromise(sqlQuery);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = ProductsDbConnector;
