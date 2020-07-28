@@ -9,7 +9,7 @@ import Navbar from "./components/navbar/Navbar";
 import CreateClassroom from "./components/createClassroom/createClassroom";
 import Axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 export default class App extends Component {
   constructor(props) {
     super(props);

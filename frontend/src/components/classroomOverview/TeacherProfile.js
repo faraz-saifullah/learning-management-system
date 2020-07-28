@@ -3,7 +3,7 @@ import withContext from "../../withContext";
 import TextField from "@material-ui/core/TextField";
 import Axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 
 class TeacherInfo extends React.Component {
   constructor(props) {

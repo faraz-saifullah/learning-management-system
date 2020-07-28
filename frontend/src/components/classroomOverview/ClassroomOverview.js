@@ -7,7 +7,7 @@ import Axios from "axios";
 import StudentsList from "./StudentsList";
 import TeacherProfile from "./TeacherProfile";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 
 class ClassroomOverview extends Component {
   constructor(props) {
@@ -247,26 +247,26 @@ class ClassroomOverview extends Component {
                             </Button>
                           </>
                         ) : (
-                          <>
-                            <Button
-                              onClick={this.makeEditable}
-                              style={{ margin: 3 }}
-                              variant="contained"
-                              color="primary"
-                              disableElevation
-                            >
-                              Edit
+                            <>
+                              <Button
+                                onClick={this.makeEditable}
+                                style={{ margin: 3 }}
+                                variant="contained"
+                                color="primary"
+                                disableElevation
+                              >
+                                Edit
                             </Button>
-                            <Button
-                              style={{ margin: 3 }}
-                              variant="contained"
-                              color="secondary"
-                              disableElevation
-                            >
-                              Delete
+                              <Button
+                                style={{ margin: 3 }}
+                                variant="contained"
+                                color="secondary"
+                                disableElevation
+                              >
+                                Delete
                             </Button>
-                          </>
-                        )}
+                            </>
+                          )}
                       </>
                     )}
                   </form>
@@ -344,8 +344,8 @@ class ClassroomOverview extends Component {
                     </Grid>
                   </>
                 ) : (
-                  <TeacherProfile teacherId={this.state.teacher_id} />
-                )}
+                    <TeacherProfile teacherId={this.state.teacher_id} />
+                  )}
               </Grid>
             </Grid>
             <br />
@@ -359,14 +359,14 @@ class ClassroomOverview extends Component {
             )}
           </div>
         ) : (
-          <center>
-            <div className="column">
-              <span className="title has-text-grey-light">
-                No Information To Display!
+            <center>
+              <div className="column">
+                <span className="title has-text-grey-light">
+                  No Information To Display!
               </span>
-            </div>
-          </center>
-        )}
+              </div>
+            </center>
+          )}
       </Fragment>
     );
   }

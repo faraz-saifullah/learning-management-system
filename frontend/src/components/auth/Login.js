@@ -8,7 +8,7 @@ import Axios from "axios";
 
 // import { cookieClient } from 'react-cookie'
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 
 class Login extends Component {
   constructor(props) {
@@ -93,8 +93,8 @@ class Login extends Component {
         </div>
       </Fragment>
     ) : (
-      <Redirect to="/" />
-    );
+        <Redirect to="/" />
+      );
   }
 }
 

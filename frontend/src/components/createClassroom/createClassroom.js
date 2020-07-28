@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 
 class CreateClassroom extends React.Component {
   constructor(props) {
@@ -122,8 +122,8 @@ class CreateClassroom extends React.Component {
         </div>
       </Fragment>
     ) : (
-      <Redirect to="/" />
-    );
+        <Redirect to="/" />
+      );
   }
 }
 

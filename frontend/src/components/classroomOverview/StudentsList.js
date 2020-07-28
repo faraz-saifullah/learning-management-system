@@ -9,7 +9,7 @@ import {
   getTableOptions,
 } from "./tableConfig";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://ec2-3-136-87-139.us-east-2.compute.amazonaws.com:3001";
 
 class StudentsTable extends React.Component {
   constructor(props) {
