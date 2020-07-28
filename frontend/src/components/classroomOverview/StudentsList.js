@@ -20,7 +20,7 @@ class StudentsTable extends React.Component {
     };
   }
 
-  fetchevents = async () => {
+  getAllStudentsOfClassroom = async () => {
     const userId = this.props.userId;
     const classroomId = this.props.classroomId;
     try {
@@ -32,18 +32,22 @@ class StudentsTable extends React.Component {
           },
         }
       );
-      this.setState({
-        students: response.data.data,
-      });
+      if (response.data.data.length > 0) {
+        this.setState({
+          students: response.data.data,
+        });
+      }
     } catch (err) {
       console.error("This error is: ", err);
     }
   };
 
-  componentDidMount = async () => {
-    setImmediate(() => {
-      this.fetchevents();
-    });
+  componentWillReceiveProps = async () => {
+    await this.getAllStudentsOfClassroom();
+  };
+
+  componentWillMount = async () => {
+    await this.getAllStudentsOfClassroom();
   };
 
   render() {

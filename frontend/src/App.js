@@ -4,7 +4,9 @@ import Login from "./components/auth/Login";
 import ClassroomList from "./components/classrooms/ClassroomList";
 import ClassroomOverview from "./components/classroomOverview/ClassroomOverview";
 import Context from "./Context";
+import UserProfile from "./components/profile/UserProfile";
 import Navbar from "./components/navbar/Navbar";
+import CreateClassroom from "./components/createClassroom/createClassroom";
 import Axios from "axios";
 
 const BASE_URL = "http://localhost:3001";
@@ -91,6 +93,12 @@ export default class App extends Component {
                   exact
                   path="/classroom/:classroomId"
                   component={ClassroomOverview}
+                />
+                <Route exact path="/profile" component={UserProfile} />
+                <Route
+                  exact
+                  path="/create-classroom"
+                  component={CreateClassroom}
                 />
                 <Route exact path="/login" component={Login} />
               </Switch>

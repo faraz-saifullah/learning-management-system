@@ -15,7 +15,11 @@ class TeacherInfo extends React.Component {
 
   async componentDidMount() {
     const teacherId = this.props.teacherId;
-    const response = await Axios.get(`${BASE_URL}/users/${teacherId}`);
+    const response = await Axios.get(`${BASE_URL}/users/${teacherId}`, {
+      headers: {
+        "x-access-token": JSON.parse(localStorage.getItem("user")).token,
+      },
+    });
     this.setState({ teacher: response.data.data[0] });
   }
 
@@ -56,7 +60,7 @@ class TeacherInfo extends React.Component {
           <TextField
             disabled
             fullWidth
-            id="days"
+            id="city"
             label="City"
             value={this.state.teacher.city}
             variant="outlined"

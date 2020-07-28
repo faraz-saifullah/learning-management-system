@@ -6,11 +6,14 @@ const Auth = require("../core/authContoller");
 const APIResponseHandler = require("../utils/APIResponseHandler/APIResponseHandler");
 
 //Common for both student and teacher
+
+//get public profile info of user with userId
 router.get("/:userId", async function (req, res) {
   let result = await new User().getUserInfo(req);
   return new APIResponseHandler().handle(res, result);
 });
 
+//get all classrooms of a particular user with userId
 router.get("/:userId/classrooms", new Auth().isAuthorized, async function (
   req,
   res
@@ -20,22 +23,22 @@ router.get("/:userId/classrooms", new Auth().isAuthorized, async function (
 });
 
 //All routes related to login signup and logout
+
+//create new user
 router.post("/signup", async function (req, res) {
   let result = await new User().createUser(req);
   return new APIResponseHandler().handle(res, result);
 });
-
+//login
 router.post("/login", async function (req, res) {
   let result = await new User().checkIfUserExists(req);
   new Auth().login(result);
   return new APIResponseHandler().handleAuthentication(res, result);
 });
 
-router.post("/logout", async function (req, res) {
-  res.status(200).send("Successfully Logged out!");
-});
-
 //Routes for teacher
+
+//create a new classroom for teacher with userId
 router.post("/:userId/classrooms", new Auth().isTeacher, async function (
   req,
   res
@@ -44,6 +47,7 @@ router.post("/:userId/classrooms", new Auth().isTeacher, async function (
   return new APIResponseHandler().handle(res, result);
 });
 
+//add new student to the classroom with classroomId
 router.post(
   "/:userId/classrooms/:classroomId/students",
   new Auth().isTeacher,
@@ -53,6 +57,7 @@ router.post(
   }
 );
 
+//get all students of a particular classroom with classroomId
 router.get(
   "/:userId/classrooms/:classroomId/students",
   new Auth().isTeacher,
@@ -62,6 +67,7 @@ router.get(
   }
 );
 
+//update classroom information
 router.put(
   "/:userId/classrooms/:classroomId",
   new Auth().isTeacher,

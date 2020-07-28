@@ -18,8 +18,8 @@ class ProductsDbConnector {
         reqBody.auth.userId,
         reqBody.numberOfStudents || 0,
         reqBody.timings || "9am to 10am",
-        reqBody.days || ["Monday"],
-        reqBody.usefulResources.split(",") || [],
+        reqBody.days.replace(" ", "").split(",") || ["Monday"],
+        reqBody.usefulResources || ["Notes: Class Notes"],
       ],
     };
     try {
@@ -40,7 +40,7 @@ class ProductsDbConnector {
         reqBody.timings || "9am to 10am",
         reqBody.days || ["Monday"],
         reqBody.numberOfStudents,
-        reqBody.usefulResources || [],
+        reqBody.usefulResources,
         classroomId,
       ],
     };
