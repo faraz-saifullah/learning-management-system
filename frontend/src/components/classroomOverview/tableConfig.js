@@ -3,10 +3,8 @@ import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import FirstPage from "@material-ui/icons/FirstPage";
 import LastPage from "@material-ui/icons/LastPage";
-import Remove from "@material-ui/icons/Remove";
 import Search from "@material-ui/icons/Search";
 import SortArrow from "@material-ui/icons/Sort";
-import ViewColumn from "@material-ui/icons/ViewColumn";
 import ClearIcon from "@material-ui/icons/Clear";
 
 export function getIcons() {

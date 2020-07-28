@@ -354,6 +354,7 @@ class ClassroomOverview extends Component {
               <StudentsList
                 userId={this.props.context.user.user_id}
                 classroomId={this.state.classroom_id}
+                numberOfStudents={this.state.number_of_students}
               />
             )}
           </div>

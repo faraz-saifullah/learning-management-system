@@ -13,14 +13,10 @@ class Teacher extends User {
 
   async createClassroom(req) {
     try {
-      const result = await this.classroomsDbConnector.createClassroom(
-        req.body,
-        req.session
-      );
+      const result = await this.classroomsDbConnector.createClassroom(req.body);
       if (result.data && result.data[0]) {
         this.userClassroomMapDbConnector.createNewPair({
-          ...req.body,
-          ...req.session,
+          userId: req.body.auth.userId,
           classroomId: result.data[0].classroom_id,
           dateCreated: new Date().toISOString().split("T")[0],
         });

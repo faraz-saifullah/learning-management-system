@@ -28,23 +28,28 @@ class Navbar extends Component {
               </Link>
             </>
           ) : (
-              // Logout should only show when user is logged in
-              <>
-                <Link to="/" className="navbar-item">
-                  My Classrooms
+            // Logout should only show when user is logged in
+            <>
+              {this.props.context.user.type === "teacher" && (
+                <Link to="/create-classroom" className="navbar-item">
+                  Create Classroom
+                </Link>
+              )}
+              <Link to="/" className="navbar-item">
+                My Classrooms
               </Link>
-                <Link to="/profile" className="navbar-item">
-                  My Profile
+              <Link to="/profile" className="navbar-item">
+                My Profile
               </Link>
-                <a
-                  href="/login"
-                  className="navbar-item"
-                  onClick={this.props.context.logout}
-                >
-                  Logout
+              <a
+                href="/login"
+                className="navbar-item"
+                onClick={this.props.context.logout}
+              >
+                Logout
               </a>
-              </>
-            )}
+            </>
+          )}
         </div>
       </nav>
     );
