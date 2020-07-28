@@ -4,6 +4,7 @@ import Login from "./components/auth/Login";
 import ClassroomList from "./components/classrooms/ClassroomList";
 import ClassroomOverview from "./components/classroomOverview/ClassroomOverview";
 import Context from "./Context";
+import UserProfile from "./components/profile/UserProfile";
 import Navbar from "./components/navbar/Navbar";
 import Axios from "axios";
 
@@ -92,6 +93,7 @@ export default class App extends Component {
                   path="/classroom/:classroomId"
                   component={ClassroomOverview}
                 />
+                <Route exact path="/profile" component={UserProfile} />
                 <Route exact path="/login" component={Login} />
               </Switch>
             </div>
