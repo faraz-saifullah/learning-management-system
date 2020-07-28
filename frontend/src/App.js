@@ -5,7 +5,7 @@ import ClassroomList from "./components/classrooms/ClassroomList";
 import ClassroomOverview from "./components/classroomOverview/ClassroomOverview";
 import Context from "./Context";
 import Navbar from "./components/navbar/Navbar";
-import axios from "axios";
+import Axios from "axios";
 
 const BASE_URL = "http://localhost:3001";
 export default class App extends Component {
@@ -32,7 +32,6 @@ export default class App extends Component {
 
   logout = (event) => {
     event.preventDefault();
-    axios.post(`${BASE_URL}/users/logout`);
     let user = null;
     this.setState({ user });
     localStorage.setItem("user", null);
@@ -51,8 +50,11 @@ export default class App extends Component {
       this.setState({
         isLoadingClassrooms: true,
       });
-      axios
-        .get(`${BASE_URL}/users/${user.user_id}/classrooms`)
+      Axios.get(`${BASE_URL}/users/${user.user_id}/classrooms`, {
+        headers: {
+          "x-access-token": JSON.parse(localStorage.getItem("user")).token,
+        },
+      })
         .then((response) => {
           let classrooms = response.data.data;
           this.setState({
@@ -61,6 +63,7 @@ export default class App extends Component {
           });
         })
         .catch((err) => {
+          console.log(err);
           this.setState({
             classrooms: [],
             isLoadingClassrooms: false,

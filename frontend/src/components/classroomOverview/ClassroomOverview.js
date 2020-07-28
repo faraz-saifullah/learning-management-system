@@ -61,13 +61,21 @@ class ClassroomOverview extends Component {
   updateClassInfo = (event) => {
     if (event) event.preventDefault();
     const userId = this.props.context.user.user_id;
-    Axios.put(`${BASE_URL}/users/${userId}/classrooms/${this.classroomId}`, {
-      classroomName: this.state.classroom_name,
-      subject: this.state.subject,
-      timings: this.state.timings,
-      days: this.state.days,
-      usefulResources: this.state.useful_resources,
-    })
+    Axios.put(
+      `${BASE_URL}/users/${userId}/classrooms/${this.classroomId}`,
+      {
+        classroomName: this.state.classroom_name,
+        subject: this.state.subject,
+        timings: this.state.timings,
+        days: this.state.days,
+        usefulResources: this.state.useful_resources,
+      },
+      {
+        headers: {
+          "x-access-token": JSON.parse(localStorage.getItem("user")).token,
+        },
+      }
+    )
       .then((response) => {
         alert(
           `Update Successful for classroom Id: ${response.data.data[0].classroom_id}`
@@ -202,26 +210,26 @@ class ClassroomOverview extends Component {
                         </Button>
                       </>
                     ) : (
-                        <>
-                          <Button
-                            onClick={this.makeEditable}
-                            style={{ margin: 3 }}
-                            variant="contained"
-                            color="primary"
-                            disableElevation
-                          >
-                            Edit
+                      <>
+                        <Button
+                          onClick={this.makeEditable}
+                          style={{ margin: 3 }}
+                          variant="contained"
+                          color="primary"
+                          disableElevation
+                        >
+                          Edit
                         </Button>
-                          <Button
-                            style={{ margin: 3 }}
-                            variant="contained"
-                            color="secondary"
-                            disableElevation
-                          >
-                            Delete
+                        <Button
+                          style={{ margin: 3 }}
+                          variant="contained"
+                          color="secondary"
+                          disableElevation
+                        >
+                          Delete
                         </Button>
-                        </>
-                      )}
+                      </>
+                    )}
                   </form>
                 </center>
               </Grid>
@@ -297,14 +305,14 @@ class ClassroomOverview extends Component {
             </Grid>
           </div>
         ) : (
-            <center>
-              <div className="column">
-                <span className="title has-text-grey-light">
-                  No Information To Display!
+          <center>
+            <div className="column">
+              <span className="title has-text-grey-light">
+                No Information To Display!
               </span>
-              </div>
-            </center>
-          )}
+            </div>
+          </center>
+        )}
       </Fragment>
     );
   }
