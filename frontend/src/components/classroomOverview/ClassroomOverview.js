@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Axios from "axios";
+import StudentsList from "./StudentsList";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -44,10 +45,16 @@ class ClassroomOverview extends Component {
   addNewStudent = async (event) => {
     event.preventDefault();
     const { user_id } = this.props.context.user;
+    const numberOfStudents = this.state.number_of_students;
     Axios.post(
       `${BASE_URL}/users/${user_id}/classrooms/${this.state.classroom_id}/students`,
       {
         phone: this.state.studentPhone,
+      },
+      {
+        headers: {
+          "x-access-token": JSON.parse(localStorage.getItem("user")).token,
+        },
       }
     )
       .then((response) => {
@@ -56,7 +63,7 @@ class ClassroomOverview extends Component {
             `Successfully added student: ${response.data.data[0].user_id} to classroom`
           );
           this.setState({
-            number_of_students: this.state.number_of_students + 1,
+            number_of_students: numberOfStudents + 1,
           });
           this.updateClassInfo();
         } else {
@@ -64,6 +71,7 @@ class ClassroomOverview extends Component {
         }
       })
       .catch((err) => {
+        console.log(err);
         alert(`Student already in the classroom`);
       });
     this.setState({
@@ -94,6 +102,7 @@ class ClassroomOverview extends Component {
         timings: this.state.timings,
         days: this.state.days,
         usefulResources: this.state.useful_resources,
+        numberOfStudents: this.state.number_of_students,
       },
       {
         headers: {
@@ -328,6 +337,12 @@ class ClassroomOverview extends Component {
                 </Grid>
               </Grid>
             </Grid>
+            <br />
+            <br />
+            <StudentsList
+              userId={this.props.context.user.user_id}
+              classroomId={this.state.classroom_id}
+            />
           </div>
         ) : (
             <center>
