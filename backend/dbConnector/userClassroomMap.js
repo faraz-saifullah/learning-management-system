@@ -36,6 +36,19 @@ class ProductsDbConnector {
       return err;
     }
   }
+
+  async getAllStudentsOfClassroom(classroomId) {
+    const sqlQuery = {
+      text: `SELECT * FROM user_classroom_map JOIN users USING (user_id) 
+      WHERE classroom_id = ($1) and type = ($2);`,
+      values: [classroomId, "student"],
+    };
+    try {
+      return await this.dataService.executeQueryAsPromise(sqlQuery);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = ProductsDbConnector;

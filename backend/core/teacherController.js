@@ -60,6 +60,16 @@ class Teacher extends User {
       return err;
     }
   }
+
+  async getListOfStudentsInClassroom(req) {
+    try {
+      return this.userClassroomMapDbConnector.getAllStudentsOfClassroom(
+        req.params.classroomId
+      );
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = Teacher;

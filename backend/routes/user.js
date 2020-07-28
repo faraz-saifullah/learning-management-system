@@ -53,6 +53,15 @@ router.post(
   }
 );
 
+router.get(
+  "/:userId/classrooms/:classroomId/students",
+  new Auth().isTeacher,
+  async function (req, res) {
+    let result = await new Teacher().getListOfStudentsInClassroom(req);
+    return new APIResponseHandler().handle(res, result);
+  }
+);
+
 router.put(
   "/:userId/classrooms/:classroomId",
   new Auth().isTeacher,

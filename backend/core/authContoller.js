@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken");
-const Config = require("../Config.json")
+const Config = require("../Config.json");
 
 class Auth {
   isAuthorized(req, res, next) {
@@ -16,7 +16,7 @@ class Auth {
         next();
       }
     } catch (err) {
-      return err
+      return err;
     }
   }
 
@@ -42,14 +42,17 @@ class Auth {
         res.status(401).send("Unauthorized!");
       }
       const decodedInfo = JWT.verify(token, Config.JWT.secret);
-      if (Number(req.params.userId) !== decodedInfo.userId && decodedInfo.type === "teacher") {
+      if (
+        Number(req.params.userId) !== decodedInfo.userId &&
+        decodedInfo.type === "teacher"
+      ) {
         res.status(401).send("Unauthorized!");
       } else {
         req.body.auth = decodedInfo;
         next();
       }
     } catch (err) {
-      return err
+      return err;
     }
   }
 }
