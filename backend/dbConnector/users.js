@@ -30,7 +30,8 @@ class ProductsDbConnector {
 
   async getUserInfoById(userId) {
     const sqlQuery = {
-      text: "SELECT * FROM users where user_id = ($1)",
+      text:
+        "SELECT name, email, phone, date_of_birth, city, state FROM users where user_id = ($1)",
       values: [userId],
     };
     try {

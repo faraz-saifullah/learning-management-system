@@ -43,8 +43,8 @@ class Auth {
       }
       const decodedInfo = JWT.verify(token, Config.JWT.secret);
       if (
-        Number(req.params.userId) !== decodedInfo.userId &&
-        decodedInfo.type === "teacher"
+        Number(req.params.userId) !== decodedInfo.userId ||
+        decodedInfo.type !== "teacher"
       ) {
         res.status(401).send("Unauthorized!");
       } else {

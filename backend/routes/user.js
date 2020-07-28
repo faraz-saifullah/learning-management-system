@@ -6,7 +6,7 @@ const Auth = require("../core/authContoller");
 const APIResponseHandler = require("../utils/APIResponseHandler/APIResponseHandler");
 
 //Common for both student and teacher
-router.get("/:userId", new Auth().isAuthorized, async function (req, res) {
+router.get("/:userId", async function (req, res) {
   let result = await new User().getUserInfo(req);
   return new APIResponseHandler().handle(res, result);
 });

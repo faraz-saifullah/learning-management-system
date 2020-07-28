@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Axios from "axios";
 import StudentsList from "./StudentsList";
+import TeacherProfile from "./TeacherProfile";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -222,137 +223,149 @@ class ClassroomOverview extends Component {
                     />
                     <br />
                     <br />
-                    {this.state.editable ? (
+                    {this.props.context.user.type === "teacher" && (
                       <>
-                        <Button
-                          onClick={this.updateClassInfo}
-                          style={{ margin: 3 }}
-                          variant="contained"
-                          color="primary"
-                          disableElevation
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          onClick={this.cancelEdit}
-                          style={{ margin: 3 }}
-                          variant="contained"
-                          color="secondary"
-                          disableElevation
-                        >
-                          Cancel
-                        </Button>
+                        {this.state.editable ? (
+                          <>
+                            <Button
+                              onClick={this.updateClassInfo}
+                              style={{ margin: 3 }}
+                              variant="contained"
+                              color="primary"
+                              disableElevation
+                            >
+                              Update
+                            </Button>
+                            <Button
+                              onClick={this.cancelEdit}
+                              style={{ margin: 3 }}
+                              variant="contained"
+                              color="secondary"
+                              disableElevation
+                            >
+                              Cancel
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              onClick={this.makeEditable}
+                              style={{ margin: 3 }}
+                              variant="contained"
+                              color="primary"
+                              disableElevation
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              style={{ margin: 3 }}
+                              variant="contained"
+                              color="secondary"
+                              disableElevation
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        )}
                       </>
-                    ) : (
-                        <>
+                    )}
+                  </form>
+                </center>
+              </Grid>
+              <Grid item xs={6}>
+                {this.props.context.user.type === "teacher" ? (
+                  <>
+                    <Grid>
+                      <center>
+                        <form>
+                          <TextField
+                            fullWidth
+                            id="classroom_mame"
+                            label="Resource Name"
+                            value={this.state.resourceName}
+                            variant="outlined"
+                            onChange={(e) =>
+                              this.setState({ resourceName: e.target.value })
+                            }
+                          />
+                          <br />
+                          <br />
+                          <TextField
+                            fullWidth
+                            id="subject"
+                            label="Resource Link"
+                            value={this.state.resourceLink}
+                            variant="outlined"
+                            onChange={(e) =>
+                              this.setState({ resourceLink: e.target.value })
+                            }
+                          />
+                          <br />
+                          <br />
                           <Button
-                            onClick={this.makeEditable}
+                            onClick={this.addNewResource}
                             style={{ margin: 3 }}
                             variant="contained"
                             color="primary"
                             disableElevation
                           >
-                            Edit
-                        </Button>
+                            Add New Resource
+                          </Button>
+                        </form>
+                      </center>
+                    </Grid>
+                    <br />
+                    <Grid>
+                      <center>
+                        <form>
+                          <TextField
+                            fullWidth
+                            id="studentPhone"
+                            label="Student Phone Number"
+                            value={this.state.studentPhone}
+                            variant="outlined"
+                            onChange={(e) =>
+                              this.setState({ studentPhone: e.target.value })
+                            }
+                          />
+                          <br />
+                          <br />
                           <Button
+                            onClick={this.addNewStudent}
                             style={{ margin: 3 }}
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             disableElevation
                           >
-                            Delete
-                        </Button>
-                        </>
-                      )}
-                  </form>
-                </center>
-              </Grid>
-              <Grid item xs={6}>
-                <Grid>
-                  <center>
-                    <form>
-                      <TextField
-                        fullWidth
-                        id="classroom_mame"
-                        label="Resource Name"
-                        value={this.state.resourceName}
-                        variant="outlined"
-                        onChange={(e) =>
-                          this.setState({ resourceName: e.target.value })
-                        }
-                      />
-                      <br />
-                      <br />
-                      <TextField
-                        fullWidth
-                        id="subject"
-                        label="Resource Link"
-                        value={this.state.resourceLink}
-                        variant="outlined"
-                        onChange={(e) =>
-                          this.setState({ resourceLink: e.target.value })
-                        }
-                      />
-                      <br />
-                      <br />
-                      <Button
-                        onClick={this.addNewResource}
-                        style={{ margin: 3 }}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                      >
-                        Add New Resource
-                      </Button>
-                    </form>
-                  </center>
-                </Grid>
-                <br />
-                <Grid>
-                  <center>
-                    <form>
-                      <TextField
-                        fullWidth
-                        id="studentPhone"
-                        label="Student Phone Number"
-                        value={this.state.studentPhone}
-                        variant="outlined"
-                        onChange={(e) =>
-                          this.setState({ studentPhone: e.target.value })
-                        }
-                      />
-                      <br />
-                      <br />
-                      <Button
-                        onClick={this.addNewStudent}
-                        style={{ margin: 3 }}
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                      >
-                        Add New Student
-                      </Button>
-                    </form>
-                  </center>
-                </Grid>
+                            Add New Student
+                          </Button>
+                        </form>
+                      </center>
+                    </Grid>
+                  </>
+                ) : (
+                  <TeacherProfile teacherId={this.state.teacher_id} />
+                )}
               </Grid>
             </Grid>
             <br />
             <br />
-            <StudentsList
-              userId={this.props.context.user.user_id}
-              classroomId={this.state.classroom_id}
-            />
+            {this.props.context.user.type === "teacher" && (
+              <StudentsList
+                userId={this.props.context.user.user_id}
+                classroomId={this.state.classroom_id}
+              />
+            )}
           </div>
         ) : (
-            <center>
-              <div className="column">
-                <span className="title has-text-grey-light">
-                  No Information To Display!
+          <center>
+            <div className="column">
+              <span className="title has-text-grey-light">
+                No Information To Display!
               </span>
-              </div>
-            </center>
-          )}
+            </div>
+          </center>
+        )}
       </Fragment>
     );
   }
