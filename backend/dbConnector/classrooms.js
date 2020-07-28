@@ -6,7 +6,7 @@ class ProductsDbConnector {
     this.dataService = new DataService();
   }
 
-  async createClassroom(reqBody, session) {
+  async createClassroom(reqBody) {
     const sqlQuery = {
       text: `INSERT INTO classrooms 
         (classroom_name, subject, teacher_name, teacher_id, number_of_students, timings, days, useful_resources) 
@@ -14,8 +14,8 @@ class ProductsDbConnector {
       values: [
         reqBody.classroomName,
         reqBody.subject || "",
-        session.name,
-        session.userId,
+        reqBody.auth.name,
+        reqBody.auth.userId,
         reqBody.numberOfStudents || 0,
         reqBody.timings || "9am to 10am",
         reqBody.days || ["Monday"],

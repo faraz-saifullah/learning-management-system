@@ -27,12 +27,12 @@ router.post("/signup", async function (req, res) {
 
 router.post("/login", async function (req, res) {
   let result = await new User().checkIfUserExists(req);
-  new Auth().login(req, result);
+  new Auth().login(result);
   return new APIResponseHandler().handleAuthentication(res, result);
 });
 
 router.post("/logout", async function (req, res) {
-  return new Auth().logout(req, res);
+  res.status(200).send("Successfully Logged out!");
 });
 
 //Routes for teacher

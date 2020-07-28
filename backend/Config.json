@@ -6,8 +6,7 @@
         "password": "Pass@123",
         "port": 5432
     },
-    "Session": {
-        "name": "sid",
-        "secret": "This is a random session secret"
+    "JWT": {
+        "secret": "This is 1 random session secret which is very long!!"
     }
 }

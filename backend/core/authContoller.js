@@ -1,34 +1,56 @@
+const JWT = require("jsonwebtoken");
+const Config = require("../Config.json")
+
 class Auth {
   isAuthorized(req, res, next) {
-    // if (Number(req.params.userId) !== Number(req.session.userId)) {
-    //   res.status(401).send("Unauthorizzed!");
-    // } else {
-    next();
-    // }
-  }
-
-  login(req, result) {
-    if (result.success) {
-      req.session.name = result.data[0].name;
-      req.session.userId = result.data[0].user_id;
-      req.session.type = result.data[0].type;
+    try {
+      const token = req.headers["x-access-token"];
+      if (!token) {
+        res.status(401).send("Unauthorized!");
+      }
+      const decodedInfo = JWT.verify(token, Config.JWT.secret);
+      if (Number(req.params.userId) !== decodedInfo.userId) {
+        res.status(401).send("Unauthorized!");
+      } else {
+        req.body.auth = decodedInfo;
+        next();
+      }
+    } catch (err) {
+      return err
     }
   }
 
-  logout(req, res) {
-    req.session.destroy();
-    return res.send("Logout Successfull").status(200);
+  login(result) {
+    const token = JWT.sign(
+      {
+        userId: result.data[0].user_id,
+        type: result.data[0].type,
+        name: result.data[0].name,
+      },
+      Config.JWT.secret,
+      {
+        expiresIn: 86400,
+      }
+    );
+    result.data[0].token = token;
   }
 
   isTeacher(req, res, next) {
-    // if (
-    //   Number(req.params.userId) === Number(req.session.userId) &&
-    //   req.session.type === "teacher"
-    // ) {
-    next();
-    // } else {
-    //   res.status(401).send("Unauthorizzed!");
-    // }
+    try {
+      const token = req.headers["x-access-token"];
+      if (!token) {
+        res.status(401).send("Unauthorized!");
+      }
+      const decodedInfo = JWT.verify(token, Config.JWT.secret);
+      if (Number(req.params.userId) !== decodedInfo.userId && decodedInfo.type === "teacher") {
+        res.status(401).send("Unauthorized!");
+      } else {
+        req.body.auth = decodedInfo;
+        next();
+      }
+    } catch (err) {
+      return err
+    }
   }
 }
 
