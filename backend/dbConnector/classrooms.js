@@ -50,6 +50,18 @@ class ProductsDbConnector {
       return err;
     }
   }
+
+  async deleteClassroom(classroomId) {
+    const sqlQuery = {
+      text: `DELETE FROM classrooms where classroom_id = ($1) RETURNING classroom_id;`,
+      values: [classroomId],
+    };
+    try {
+      return await this.dataService.executeQueryAsPromise(sqlQuery);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = ProductsDbConnector;

@@ -38,6 +38,17 @@ class Teacher extends User {
     }
   }
 
+  async deleteClassroom(req) {
+    try {
+      await this.userClassroomMapDbConnector.deletePair(req.params.classroomId);
+      return await this.classroomsDbConnector.deleteClassroom(
+        req.params.classroomId
+      );
+    } catch (err) {
+      return err;
+    }
+  }
+
   async addStudentToClass(req) {
     try {
       const user = await this.usersDbConnector.getUserInfo(req.body.phone);

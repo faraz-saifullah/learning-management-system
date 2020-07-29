@@ -13,6 +13,12 @@ router.get("/:userId", async function (req, res) {
   return new APIResponseHandler().handle(res, result);
 });
 
+//Update user profile
+router.put("/:userId", new Auth().isAuthorized, async function (req, res) {
+  let result = await new User().getUserInfo(req);
+  return new APIResponseHandler().handle(res, result);
+});
+
 //get all classrooms of a particular user with userId
 router.get("/:userId/classrooms", new Auth().isAuthorized, async function (
   req,
@@ -73,6 +79,15 @@ router.put(
   new Auth().isTeacher,
   async function (req, res) {
     let result = await new Teacher().updateClassroom(req);
+    return new APIResponseHandler().handle(res, result);
+  }
+);
+
+router.delete(
+  "/:userId/classrooms/:classroomId",
+  new Auth().isTeacher,
+  async function (req, res) {
+    let result = await new Teacher().deleteClassroom(req);
     return new APIResponseHandler().handle(res, result);
   }
 );

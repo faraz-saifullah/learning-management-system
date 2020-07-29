@@ -49,6 +49,18 @@ class ProductsDbConnector {
       return err;
     }
   }
+
+  async deletePair(classroomId) {
+    const sqlQuery = {
+      text: `DELETE FROM user_classroom_map WHERE classroom_id = ($1);`,
+      values: [classroomId],
+    };
+    try {
+      return await this.dataService.executeQueryAsPromise(sqlQuery);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = ProductsDbConnector;

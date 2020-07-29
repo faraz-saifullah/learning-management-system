@@ -92,6 +92,24 @@ class ClassroomOverview extends Component {
     this.setState(this.baseState);
   };
 
+  deleteClassroom = (event) => {
+    event.preventDefault();
+    const userId = this.props.context.user.user_id;
+    Axios.delete(`${BASE_URL}/users/${userId}/classrooms/${this.classroomId}`, {
+      headers: {
+        "x-access-token": JSON.parse(localStorage.getItem("user")).token,
+      },
+    })
+      .then((response) => {
+        alert(`Classroom Deleted Successfully!`);
+        window.location.reload();
+        this.props.history.push("/");
+      })
+      .catch((err) => {
+        alert(`Delete Unsuccessful!\nError: ${err.message}`);
+      });
+  };
+
   updateClassInfo = (event) => {
     if (event) event.preventDefault();
     const userId = this.props.context.user.user_id;
@@ -258,6 +276,7 @@ class ClassroomOverview extends Component {
                                 Edit
                             </Button>
                               <Button
+                                onClick={this.deleteClassroom}
                                 style={{ margin: 3 }}
                                 variant="contained"
                                 color="secondary"
