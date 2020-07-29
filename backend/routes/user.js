@@ -15,7 +15,7 @@ router.get("/:userId", async function (req, res) {
 
 //Update user profile
 router.put("/:userId", new Auth().isAuthorized, async function (req, res) {
-  let result = await new User().getUserInfo(req);
+  let result = await new User().updateUserInfo(req);
   return new APIResponseHandler().handle(res, result);
 });
 

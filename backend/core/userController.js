@@ -26,6 +26,14 @@ class User {
     }
   }
 
+  async updateUserInfo(req) {
+    try {
+      return await this.usersDbConnector.updateUser(req.body, req.params.userId);
+    } catch (err) {
+      return err;
+    }
+  }
+
   async checkIfUserExists(req) {
     try {
       let userInfo = await this.usersDbConnector.getUserInfo(req.body.phone);

@@ -28,6 +28,27 @@ class ProductsDbConnector {
     }
   }
 
+  async updateUser(reqBody, userId) {
+    const sqlQuery = {
+      text: `UPDATE users SET name = ($1), email = ($2), phone = ($3), 
+      date_of_birth = ($4), city = ($5), state = ($6) WHERE user_id = ($7)`,
+      values: [
+        reqBody.name,
+        reqBody.email,
+        reqBody.phone,
+        reqBody.dateOfBirth,
+        reqBody.city,
+        reqBody.state,
+        userId
+      ],
+    };
+    try {
+      return await this.dataService.executeQueryAsPromise(sqlQuery);
+    } catch (err) {
+      return err;
+    }
+  }
+
   async getUserInfoById(userId) {
     const sqlQuery = {
       text:

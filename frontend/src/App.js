@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./components/auth/Login";
-import ClassroomList from "./components/classrooms/ClassroomList";
+import ClassroomList from "./components/classroomList/ClassroomList";
 import ClassroomOverview from "./components/classroomOverview/ClassroomOverview";
 import Context from "./Context";
 import UserProfile from "./components/profile/UserProfile";
