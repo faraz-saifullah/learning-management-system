@@ -1,0 +1,12 @@
+{
+    "PostgresDatabase": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "lms",
+        "password": "Pass@123",
+        "port": 5432
+    },
+    "JWT": {
+        "secret": "This is 1 random session secret which is very long!!"
+    }
+}
