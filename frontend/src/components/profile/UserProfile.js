@@ -10,6 +10,8 @@ class UserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ...this.props.context.user,
+      password: "",
       editable: false,
     };
     this.baseState = this.state;
@@ -17,44 +19,37 @@ class UserInfo extends React.Component {
 
   makeEditable = () => {
     this.setState({
-      editable: true
-    })
-  }
+      editable: true,
+    });
+  };
 
   cancelEdit = () => {
-    this.setState(this.baseState)
-  }
+    this.setState(this.baseState);
+  };
 
   updateUserDetails = async () => {
     const userId = this.props.context.user.user_id;
-    const response = await Axios.put(`${BASE_URL}/users/${userId}`, {
-      name: this.state.name,
-      email: this.state.email,
-      phone: this.state.phone,
-      dateOfBirth: this.state.date_of_birth,
-      city: this.state.city,
-      state: this.state.state
-    },
+    const response = await Axios.put(
+      `${BASE_URL}/users/${userId}`,
+      {
+        name: this.state.name,
+        email: this.state.email,
+        phone: this.state.phone,
+        dateOfBirth: this.state.date_of_birth,
+        city: this.state.city,
+        state: this.state.state,
+      },
       {
         headers: {
           "x-access-token": JSON.parse(localStorage.getItem("user")).token,
         },
-      });
-    alert('User info Updated Successfully');
+      }
+    );
+    alert("User info Updated Successfully");
     this.setState({
-      editable: false
-    })
-  }
-
-  async componentDidMount() {
-    const userId = this.props.context.user.user_id;
-    const response = await Axios.get(`${BASE_URL}/users/${userId}`, {
-      headers: {
-        "x-access-token": JSON.parse(localStorage.getItem("user")).token,
-      },
+      editable: false,
     });
-    this.setState({ ...response.data.data[0] });
-  }
+  };
 
   render() {
     return (
@@ -76,9 +71,7 @@ class UserInfo extends React.Component {
                   label="Name"
                   value={this.state.name}
                   variant="outlined"
-                  onChange={(e) =>
-                    this.setState({ name: e.target.value })
-                  }
+                  onChange={(e) => this.setState({ name: e.target.value })}
                 />
                 <br />
                 <br />
@@ -89,9 +82,7 @@ class UserInfo extends React.Component {
                   label="Email"
                   value={this.state.email}
                   variant="outlined"
-                  onChange={(e) =>
-                    this.setState({ email: e.target.value })
-                  }
+                  onChange={(e) => this.setState({ email: e.target.value })}
                 />
                 <br />
                 <br />
@@ -102,9 +93,7 @@ class UserInfo extends React.Component {
                   label="Phone"
                   value={this.state.phone}
                   variant="outlined"
-                  onChange={(e) =>
-                    this.setState({ phone: e.target.value })
-                  }
+                  onChange={(e) => this.setState({ phone: e.target.value })}
                 />
                 <br />
                 <br />
@@ -128,9 +117,7 @@ class UserInfo extends React.Component {
                   label="City"
                   value={this.state.city}
                   variant="outlined"
-                  onChange={(e) =>
-                    this.setState({ city: e.target.value })
-                  }
+                  onChange={(e) => this.setState({ city: e.target.value })}
                 />
                 <br />
                 <br />
@@ -141,9 +128,7 @@ class UserInfo extends React.Component {
                   label="State"
                   value={this.state.state}
                   variant="outlined"
-                  onChange={(e) =>
-                    this.setState({ state: e.target.value })
-                  }
+                  onChange={(e) => this.setState({ state: e.target.value })}
                 />
                 <br />
                 <br />
@@ -169,15 +154,16 @@ class UserInfo extends React.Component {
                     </Button>
                   </>
                 ) : (
-                    <Button
-                      onClick={this.makeEditable}
-                      style={{ margin: 3 }}
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                    >
-                      Edit
-                    </Button>)}
+                  <Button
+                    onClick={this.makeEditable}
+                    style={{ margin: 3 }}
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                  >
+                    Edit
+                  </Button>
+                )}
               </form>
             </center>
           )}

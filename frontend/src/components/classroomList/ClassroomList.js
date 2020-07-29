@@ -4,6 +4,7 @@ import withContext from "../../withContext";
 import Button from "@material-ui/core/Button";
 import SortIcon from "@material-ui/icons/Sort";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { Redirect } from "react-router-dom";
 
 class ClassroomList extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class ClassroomList extends Component {
   }
 
   render() {
-    return (
+    return this.props.context.user ? (
       <Fragment>
         <div className="hero is-primary">
           <div className="hero-body container">
@@ -112,6 +113,8 @@ class ClassroomList extends Component {
           </div>
         </div>
       </Fragment>
+    ) : (
+      <Redirect to="/login" />
     );
   }
 }

@@ -28,7 +28,10 @@ class User {
 
   async updateUserInfo(req) {
     try {
-      return await this.usersDbConnector.updateUser(req.body, req.params.userId);
+      return await this.usersDbConnector.updateUser(
+        req.body,
+        req.params.userId
+      );
     } catch (err) {
       return err;
     }

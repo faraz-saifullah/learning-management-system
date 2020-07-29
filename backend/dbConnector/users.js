@@ -39,7 +39,7 @@ class ProductsDbConnector {
         reqBody.dateOfBirth,
         reqBody.city,
         reqBody.state,
-        userId
+        userId,
       ],
     };
     try {

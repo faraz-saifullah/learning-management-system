@@ -66,6 +66,10 @@ class CreateClassroom extends React.Component {
         <br />
         <div className="container">
           <center>
+            <p color="red">
+              *In days field please put all class days with comma seperated Eg:
+              Monday, Tuesday
+            </p>
             <form>
               <TextField
                 style={{ width: "50%" }}
@@ -122,8 +126,8 @@ class CreateClassroom extends React.Component {
         </div>
       </Fragment>
     ) : (
-        <Redirect to="/" />
-      );
+      <Redirect to="/" />
+    );
   }
 }
 
